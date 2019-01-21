@@ -5,13 +5,24 @@
 #' of the parsed fragments.
 #'
 #' @inheritParams extract_yaml_fragments
+#' @param select A vector of regular expressions specifying object names
+#' to retain. The default (`.*`) matches everything, so by default, all
+#' objects are retained.
 #'
 #' @return A list of objects.
 #' @examples
-#' yum::load_yaml_fragments(text=c("---", "First: YAML fragment", "---",
-#'                                 "Outside of YAML",
-#'                                 "---", "Second: YAML fragment", "---",
-#'                                 "Also outside of YAML"));
+#' yum::load_yaml_fragments(text=c(
+#' "---",
+#' "-",
+#' "  id: firstFragment",
+#' "---",
+#' "Outside of YAML",
+#' "---",
+#' "-",
+#' "  id: secondFragment",
+#' "  parentId: firstFragment",
+#' "---",
+#' "Also outside of YAML"));
 #'
 #' @export
 load_yaml_fragments <- function(file,
@@ -80,9 +91,10 @@ load_yaml_fragments <- function(file,
       lapply(rawSpecs,
              function(spec) {
                selectedElements <-
-                 grep(combinedSelect,
-                      names(spec),
-                      perl=TRUE);
+                 union(which(is.null(names(spec))),
+                       grep(combinedSelect,
+                            names(spec),
+                            perl=TRUE));
                return(spec[selectedElements]);
              });
 

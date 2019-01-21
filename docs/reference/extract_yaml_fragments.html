@@ -151,15 +151,28 @@ NULL to let <code>readLines()</code> guess.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>yum::extract_yaml_fragments((text=c("---", "First: YAML fragment", "---",
-                                    "Outside of YAML",
-                                    "---", "Second: YAML fragment", "---",
-                                    "Also outside of YAML"));
-
-</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:4:61: unexpected ';'</span>
-#&gt; <span class='error'>3:                                     "---", "Second: YAML fragment", "---",</span>
-#&gt; <span class='error'>4:                                     "Also outside of YAML"));</span>
-#&gt; <span class='error'>                                                               ^</span></div></pre>
+    <pre class="examples"><div class='input'><span class='kw pkg'>yum</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/yum/topics/extract_yaml_fragments'>extract_yaml_fragments</a></span>(<span class='kw'>text</span><span class='kw'>=</span><span class='fu'>c</span>(
+<span class='st'>"---"</span>,
+<span class='st'>"First: YAML fragment"</span>,
+<span class='st'>"  id: firstFragment"</span>,
+<span class='st'>"---"</span>,
+<span class='st'>"Outside of YAML"</span>,
+<span class='st'>"---"</span>,
+<span class='st'>"Second: YAML fragment"</span>,
+<span class='st'>"  id: secondFragment"</span>,
+<span class='st'>"  parentId: firstFragment"</span>,
+<span class='st'>"---"</span>,
+<span class='st'>"Also outside of YAML"</span>));</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "---"                  "First: YAML fragment" "  id: firstFragment" 
+#&gt; [4] "---"                 
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] "---"                       "Second: YAML fragment"    
+#&gt; [3] "  id: secondFragment"      "  parentId: firstFragment"
+#&gt; [5] "---"                      
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "yamlFragments" "list"         </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

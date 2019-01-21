@@ -19,11 +19,18 @@
 #'
 #' @return A list of character vectors.
 #' @examples
-#' yum::extract_yaml_fragments((text=c("---", "First: YAML fragment", "---",
-#'                                     "Outside of YAML",
-#'                                     "---", "Second: YAML fragment", "---",
-#'                                     "Also outside of YAML"));
-#'
+#' yum::extract_yaml_fragments(text=c(
+#' "---",
+#' "First: YAML fragment",
+#' "  id: firstFragment",
+#' "---",
+#' "Outside of YAML",
+#' "---",
+#' "Second: YAML fragment",
+#' "  id: secondFragment",
+#' "  parentId: firstFragment",
+#' "---",
+#' "Also outside of YAML"));
 #' @export
 extract_yaml_fragments <- function(file,
                                    text,

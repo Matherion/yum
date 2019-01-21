@@ -21,16 +21,16 @@ element.}
 parent element (i.e. the field containing the identifier of the corresponding
 parent element).}
 
+\item{childrenName}{The name of the field containing an element's children, either
+as a list of elements, or using the 'shorthand' notation, in which case a vector
+is supplied with the identifiers of the children.}
+
 \item{autofill}{A named vector where the names represent fields to fill with
 the values of the fields specified in the vector values. Note that autofill
 replacements are only applied if the fields to be autofilled (i.e. the names of
 the vector specified in \code{autofill}) do not already have a value.}
 
 \item{silent}{Whether to provide (\code{FALSE}) or suppress (\code{TRUE}) more detailed progress updates.}
-
-\item{childName}{The name of the field containing an element's children, either
-as a list of elements, or using the 'shorthand' notation, in which case a vector
-is supplied with the identifiers of the children.}
 }
 \value{
 a \code{\link[data.tree:Node]{data.tree::Node()}} object.
@@ -41,5 +41,17 @@ can be used to convert a list of objects, as loaded from extracted
 YAML fragments, into a \code{\link[data.tree:Node]{data.tree::Node()}}.
 }
 \examples{
-Add example here!
+yumFromFile <- yum::load_yaml_fragments(text=c(
+"---",
+"-",
+"  id: firstFragment",
+"---",
+"Outside of YAML",
+"---",
+"-",
+"  id: secondFragment",
+"  parentId: firstFragment",
+"---",
+"Also outside of YAML"));
+yum::build_tree(yumFromFile);
 }

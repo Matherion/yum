@@ -40,9 +40,7 @@ directory returning a list of character vectors containing the
 extracted fragments.
 }
 \examples{
-yum::extract_yaml_fragments(text=c("---", "First: YAML fragment", "---",
-                                   "Outside of YAML",
-                                   "---", "Second: YAML fragment", "---",
-                                   "Also outside of YAML"));
-
+\dontrun{
+yum::extract_yaml_dir(path="A:/some/path");
+}
 }

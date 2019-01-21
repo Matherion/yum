@@ -15,6 +15,10 @@ over \code{text}.}
 \item{text}{A character vector to scan, where every element should
 represent one line in the file; can be specified instead of \code{file}.}
 
+\item{select}{A vector of regular expressions specifying object names
+to retain. The default (\code{.*}) matches everything, so by default, all
+objects are retained.}
+
 \item{delimiterRegEx}{The regular expression used to locate YAML
 fragments.}
 
@@ -36,9 +40,17 @@ calls \code{\link[yaml:yaml.load]{yaml::yaml.load()}} to parse them. It then ret
 of the parsed fragments.
 }
 \examples{
-yum::load_yaml_fragments(text=c("---", "First: YAML fragment", "---",
-                                "Outside of YAML",
-                                "---", "Second: YAML fragment", "---",
-                                "Also outside of YAML"));
+yum::load_yaml_fragments(text=c(
+"---",
+"-",
+"  id: firstFragment",
+"---",
+"Outside of YAML",
+"---",
+"-",
+"  id: secondFragment",
+"  parentId: firstFragment",
+"---",
+"Also outside of YAML"));
 
 }

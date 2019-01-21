@@ -13,7 +13,7 @@
 #' @param parentIdName The name of the field containing references to an element's
 #' parent element (i.e. the field containing the identifier of the corresponding
 #' parent element).
-#' @param childName The name of the field containing an element's children, either
+#' @param childrenName The name of the field containing an element's children, either
 #' as a list of elements, or using the 'shorthand' notation, in which case a vector
 #' is supplied with the identifiers of the children.
 #' @param autofill A named vector where the names represent fields to fill with
@@ -23,9 +23,22 @@
 #' @param silent Whether to provide (`FALSE`) or suppress (`TRUE`) more detailed progress updates.
 #'
 #' @return a [data.tree::Node()] object.
-#' @export
 #'
-#' @examples Add example here!
+#' @examples
+#' yumFromFile <- yum::load_yaml_fragments(text=c(
+#' "---",
+#' "-",
+#' "  id: firstFragment",
+#' "---",
+#' "Outside of YAML",
+#' "---",
+#' "-",
+#' "  id: secondFragment",
+#' "  parentId: firstFragment",
+#' "---",
+#' "Also outside of YAML"));
+#' yum::build_tree(yumFromFile);
+#' @export
 build_tree <- function(x,
                        idName = 'id',
                        parentIdName = 'parentId',
@@ -111,7 +124,9 @@ build_tree <- function(x,
                                     childrenName=childrenName);
 
       if (!silent) {
-        print(glue::glue("Tree root object has name '{res$name}'."));
+        cat("Tree root object has name '",
+            res$name,
+            "'.", sep="");
       }
 
       ### Check for missing labels and/or codes and fill them with the identifiers

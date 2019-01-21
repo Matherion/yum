@@ -3,3 +3,4 @@
 ^README\.Rmd$
 ^yum\.Rproj$
 ^\.Rproj\.user$
+^docs/

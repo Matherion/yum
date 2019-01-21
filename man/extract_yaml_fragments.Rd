@@ -35,9 +35,16 @@ returning a list of character vectors containing the extracted
 fragments.
 }
 \examples{
-yum::extract_yaml_fragments((text=c("---", "First: YAML fragment", "---",
-                                    "Outside of YAML",
-                                    "---", "Second: YAML fragment", "---",
-                                    "Also outside of YAML"));
-
+yum::extract_yaml_fragments(text=c(
+"---",
+"First: YAML fragment",
+"  id: firstFragment",
+"---",
+"Outside of YAML",
+"---",
+"Second: YAML fragment",
+"  id: secondFragment",
+"  parentId: firstFragment",
+"---",
+"Also outside of YAML"));
 }

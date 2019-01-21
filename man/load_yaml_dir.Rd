@@ -19,6 +19,10 @@ against: only files matching one or more regular expressions in this
 vector are processed. The default regex (\code{^[^\.]+.*$}) matches all
 files except those that start with a period (\code{.}).}
 
+\item{select}{A vector of regular expressions specifying object names
+to retain. The default (\code{.*}) matches everything, so by default, all
+objects are retained.}
+
 \item{delimiterRegEx}{The regular expression used to locate YAML
 fragments.}
 
@@ -46,9 +50,7 @@ then returns a list where each element is a list with the parsed
 fragments in a file.
 }
 \examples{
-yum::load_yaml_fragments(text=c("---", "First: YAML fragment", "---",
-                                "Outside of YAML",
-                                "---", "Second: YAML fragment", "---",
-                                "Also outside of YAML"));
-
+\dontrun{
+yum::load_yaml_dir(path="A:/some/path");
+}
 }

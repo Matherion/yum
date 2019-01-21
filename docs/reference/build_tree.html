@@ -133,6 +133,12 @@ parent element (i.e. the field containing the identifier of the corresponding
 parent element).</p></td>
     </tr>
     <tr>
+      <th>childrenName</th>
+      <td><p>The name of the field containing an element's children, either
+as a list of elements, or using the 'shorthand' notation, in which case a vector
+is supplied with the identifiers of the children.</p></td>
+    </tr>
+    <tr>
       <th>autofill</th>
       <td><p>A named vector where the names represent fields to fill with
 the values of the fields specified in the vector values. Note that autofill
@@ -143,12 +149,6 @@ the vector specified in <code>autofill</code>) do not already have a value.</p><
       <th>silent</th>
       <td><p>Whether to provide (<code>FALSE</code>) or suppress (<code>TRUE</code>) more detailed progress updates.</p></td>
     </tr>
-    <tr>
-      <th>childName</th>
-      <td><p>The name of the field containing an element's children, either
-as a list of elements, or using the 'shorthand' notation, in which case a vector
-is supplied with the identifiers of the children.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -157,10 +157,22 @@ is supplied with the identifiers of the children.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>Add example here!
-</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:1:5: unexpected symbol</span>
-#&gt; <span class='error'>1: Add example</span>
-#&gt; <span class='error'>        ^</span></div></pre>
+    <pre class="examples"><div class='input'><span class='no'>yumFromFile</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>yum</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/yum/topics/load_yaml_fragments'>load_yaml_fragments</a></span>(<span class='kw'>text</span><span class='kw'>=</span><span class='fu'>c</span>(
+<span class='st'>"---"</span>,
+<span class='st'>"-"</span>,
+<span class='st'>"  id: firstFragment"</span>,
+<span class='st'>"---"</span>,
+<span class='st'>"Outside of YAML"</span>,
+<span class='st'>"---"</span>,
+<span class='st'>"-"</span>,
+<span class='st'>"  id: secondFragment"</span>,
+<span class='st'>"  parentId: firstFragment"</span>,
+<span class='st'>"---"</span>,
+<span class='st'>"Also outside of YAML"</span>));
+<span class='kw pkg'>yum</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/yum/topics/build_tree'>build_tree</a></span>(<span class='no'>yumFromFile</span>);</div><div class='output co'>#&gt;                levelName
+#&gt; 1                       
+#&gt; 2  °--firstFragment     
+#&gt; 3      °--secondFragment</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

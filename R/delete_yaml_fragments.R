@@ -25,7 +25,6 @@
 #' @export
 delete_yaml_fragments <- function(file,
                                   text,
-                                  select=".*",
                                   delimiterRegEx = "^---$",
                                   ignoreOddDelimiters = FALSE,
                                   silent=TRUE) {

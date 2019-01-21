@@ -17,14 +17,13 @@
 #' vector are processed. The default regex (`^[^\.]+.*$`) matches all
 #' files except those that start with a period (`.`).
 #' @inheritParams extract_yaml_dir
+#' @inheritParams load_yaml_fragments
 #'
 #' @return A list of lists of objects.
 #' @examples
-#' yum::load_yaml_fragments(text=c("---", "First: YAML fragment", "---",
-#'                                 "Outside of YAML",
-#'                                 "---", "Second: YAML fragment", "---",
-#'                                 "Also outside of YAML"));
-#'
+#' \dontrun{
+#' yum::load_yaml_dir(path="A:/some/path");
+#' }
 #' @export
 load_yaml_dir <- function(path,
                           recursive = TRUE,
