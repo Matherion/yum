@@ -72,21 +72,10 @@ extract_yaml_fragments <- function(file,
 
   yamlFragmentIndices <- seq_along(yamlFragments);
 
-  ### Rewritten using base R to remove `purrr` dependency
-  # indexSets <- purrr::map2(.x=yamlFragments[is.odd(yamlFragmentIndices)],
-  #                          .y=yamlFragments[is.even(yamlFragmentIndices)],
-  #                          .f=`:`);
-
-  indexPairIndices <-
-    list(yamlFragments[is.odd(yamlFragmentIndices)],
-         yamlFragments[is.even(yamlFragmentIndices)]);
-
   indexSets <-
-    lapply(seq_along(indexPairIndices[[1]]),
-           function(pair) {
-             return(seq(indexPairIndices[[1]][pair],
-                        indexPairIndices[[2]][pair]));
-           });
+    mapply(seq,
+           yamlFragments[is.odd(yamlFragmentIndices)],
+           yamlFragments[is.even(yamlFragmentIndices)]);
 
   res <-
     lapply(indexSets,
