@@ -4,7 +4,7 @@
 \alias{load_yaml_fragments}
 \title{Load all YAML fragments from a file}
 \usage{
-load_yaml_fragments(file, text, select = ".*",
+load_yaml_fragments(file, text, yamlFragments = NULL, select = ".*",
   delimiterRegEx = "^---$", ignoreOddDelimiters = FALSE,
   encoding = "UTF-8", silent = TRUE)
 }
@@ -14,6 +14,12 @@ over \code{text}.}
 
 \item{text}{A character vector to scan, where every element should
 represent one line in the file; can be specified instead of \code{file}.}
+
+\item{yamlFragments}{A character vector of class \code{yamlFragment} where
+every element corresponds to one line of the YAML fragments, or a list
+of multiple such character vectors (of class \code{yamlFragments}). Specify
+either \code{yamlFragments} (which, if specified, takes precedence over \code{file}
+and \code{text}), \code{file}, or \code{text} (\code{file} takes precedence over \code{text}).}
 
 \item{select}{A vector of regular expressions specifying object names
 to retain. The default (\code{.*}) matches everything, so by default, all
@@ -32,7 +38,8 @@ NULL to let \code{\link[=readLines]{readLines()}} guess.}
 \item{silent}{Whether to be silent (TRUE) or informative (FALSE).}
 }
 \value{
-A list of objects.
+A list of objects, where each object corresponds to one
+YAML fragment from the source file or text.
 }
 \description{
 These function extracts all YAML fragments from a file and then

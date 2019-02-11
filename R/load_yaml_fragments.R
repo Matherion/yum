@@ -5,11 +5,17 @@
 #' of the parsed fragments.
 #'
 #' @inheritParams extract_yaml_fragments
+#' @param yamlFragments A character vector of class `yamlFragment` where
+#' every element corresponds to one line of the YAML fragments, or a list
+#' of multiple such character vectors (of class `yamlFragments`). Specify
+#' either `yamlFragments` (which, if specified, takes precedence over `file`
+#' and `text`), `file`, or `text` (`file` takes precedence over `text`).
 #' @param select A vector of regular expressions specifying object names
 #' to retain. The default (`.*`) matches everything, so by default, all
 #' objects are retained.
 #'
-#' @return A list of objects.
+#' @return A list of objects, where each object corresponds to one
+#' YAML fragment from the source file or text.
 #' @examples
 #' yum::load_yaml_fragments(text=c(
 #' "---",
@@ -27,6 +33,7 @@
 #' @export
 load_yaml_fragments <- function(file,
                                 text,
+                                yamlFragments=NULL,
                                 select=".*",
                                 delimiterRegEx = "^---$",
                                 ignoreOddDelimiters = FALSE,
@@ -39,7 +46,24 @@ load_yaml_fragments <- function(file,
          call. = FALSE);
   }
 
-  if (!missing(file)) {
+  if (!is.null(yamlFragments)) {
+    if (("yamlFragment" %in% class(yamlFragments)) ||
+        ("yamlFragments" %in% class(yamlFragments))) {
+      yamlLineSets <- yamlFragments;
+    } else if ("yamlFragmentsFromDir" %in% class(yamlFragments)) {
+      return(load_yaml_list(x=yamlFragments,
+                            recursive = TRUE,
+                            select=select,
+                            delimiterRegEx = delimiterRegEx,
+                            ignoreOddDelimiters = ignoreOddDelimiters,
+                            encoding=encoding,
+                            silent=silent));
+    } else {
+      stop("If passing a list of YAML line sets as produced by ",
+           "the yum `extract_yaml_*` functions, they must have the ",
+           "class `yamlFragment`, `yamlFragments` or `yamlFragmentsFromDir`.");
+    }
+  } else if ((!missing(file)) && (!is.null(file))) {
     yamlLineSets <- extract_yaml_fragments(file=file,
                                            delimiterRegEx=delimiterRegEx,
                                            ignoreOddDelimiters=ignoreOddDelimiters,
@@ -53,8 +77,12 @@ load_yaml_fragments <- function(file,
     stop("Provide either a `file` or a `text` to scan!");
   }
 
-  rawSpecs <- lapply(yamlLineSets,
-                     yaml::yaml.load);
+  if ("yamlFragment" %in% class(yamlLineSets)) {
+    rawSpecs <- yaml::yaml.load(yamlLineSets);
+  } else {
+    rawSpecs <- lapply(yamlLineSets,
+                       yaml::yaml.load);
+  }
 
   if (!silent) {
     if (!missing(file)) {

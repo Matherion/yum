@@ -27,7 +27,8 @@ NULL to let \code{\link[=readLines]{readLines()}} guess.}
 \item{silent}{Whether to be silent (TRUE) or informative (FALSE).}
 }
 \value{
-A list of character vectors.
+A list of character vectors, where each vector corresponds to
+one YAML fragment in the source file or text.
 }
 \description{
 These function extracts all YAML fragments from a file,

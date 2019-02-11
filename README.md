@@ -20,6 +20,6 @@ install.packages("yum");
 Dependencies
 ------------
 
-`yum` was created to have minimal dependencies. However, you will usually want to have either \[yaml::yaml\] or \[data.tree::data.tree\] available to be able to actually load (parse) the extracted YAML fragments and organise them in a tree if they have a hierarchical structure. Therefore, `yum` does have some dependencies through those two suggested packages.
+`yum` was created to have minimal dependencies. However, you will usually want to have either \[yaml::yaml\] or \[data.tree::data.tree\] available to be able to actually load (parse) the extracted YAML fragments and organise them in a tree if they have a hierarchical structure. Therefore, `yum` does have some dependencies through those two suggested packages. Of these, `yaml` only has one dependency, but `data.tree` has a few more. Specifically, the dependency network looks like this:
 
-<!-- Specifically, the dependency network looks like this: -->
+<img src="man/figures/README-depnet-1.png" width="100%" />

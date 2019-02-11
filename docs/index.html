@@ -69,7 +69,7 @@
 <div id="yum-yaml-utilities-more" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#yum-yaml-utilities-more" class="anchor"></a>yum: YAML Utilities &amp; More</h1></div>
-<p>The goal of <code>yum</code> is to provide a number of functions to work with files that contain one or more YAML fragments. Several packages leverage the YAML format to facilitate systematic encoding of information in a format that is both machine- and human-readable. The yum package provides a number of functions to facilitate this in a uniform manner with minimal dependencies (i.e. only suggests yaml and data.tree to enable additional functionality).</p>
+<p>The goal of <code>yum</code> is to provide a number of functions to work with files that contain one or more YAML fragments. Several packages leverage the YAML format to facilitate systematic encoding of information in a format that is both machine- and human-readable. The yum package provides a number of functions to facilitate this in a uniform manner with minimal dependencies (i.e. only suggests [yaml::yaml] and [data.tree::data.tree] to enable additional functionality).</p>
 <!-- [![CRAN status](https://www.r-pkg.org/badges/version/yum)](https://cran.r-project.org/package=yum) -->
 <p><a href="https://travis-ci.org/Matherion/yum"><img src="https://travis-ci.org/Matherion/yum.svg?branch=master" alt="Travis build status"></a></p>
 <div id="installation" class="section level2">
@@ -77,6 +77,12 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the released version of yum from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"yum"</span>);</code></pre></div>
+</div>
+<div id="dependencies" class="section level2">
+<h2 class="hasAnchor">
+<a href="#dependencies" class="anchor"></a>Dependencies</h2>
+<p><code>yum</code> was created to have minimal dependencies. However, you will usually want to have either [yaml::yaml] or [data.tree::data.tree] available to be able to actually load (parse) the extracted YAML fragments and organise them in a tree if they have a hierarchical structure. Therefore, <code>yum</code> does have some dependencies through those two suggested packages. Of these, <code>yaml</code> only has one dependency, but <code>data.tree</code> has a few more. Specifically, the dependency network looks like this:</p>
+<p><img src="reference/figures/README-depnet-1.png" width="100%"></p>
 </div>
 </div>
   </div>

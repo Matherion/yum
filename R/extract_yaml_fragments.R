@@ -17,7 +17,8 @@
 #' NULL to let [readLines()] guess.
 #' @param silent Whether to be silent (TRUE) or informative (FALSE).
 #'
-#' @return A list of character vectors.
+#' @return A list of character vectors, where each vector corresponds to
+#' one YAML fragment in the source file or text.
 #' @examples
 #' yum::extract_yaml_fragments(text=c(
 #' "---",
@@ -47,7 +48,8 @@ extract_yaml_fragments <- function(file,
     }
   } else {
     allLines <- readLines(file,
-                          encoding=encoding);
+                          encoding=encoding,
+                          warn=FALSE);
   }
 
   yamlFragments <- grep(delimiterRegEx,
@@ -55,6 +57,15 @@ extract_yaml_fragments <- function(file,
 
   if (length(yamlFragments) == 0) {
     return(NULL);
+  } else {
+    if (!silent) {
+      cat("Identified ", length(yamlFragments),
+          " lines matching delimiterRegEx '",
+          delimiterRegEx, "': ",
+          vecTxt(yamlFragments),
+          ".\n",
+          sep="");
+    }
   }
 
   if (!is.even(length(yamlFragments))) {
@@ -72,15 +83,23 @@ extract_yaml_fragments <- function(file,
 
   yamlFragmentIndices <- seq_along(yamlFragments);
 
-  indexSets <-
-    mapply(seq,
-           yamlFragments[is.odd(yamlFragmentIndices)],
-           yamlFragments[is.even(yamlFragmentIndices)]);
+  if (length(yamlFragmentIndices) == 2) {
+    indexSets <-
+      list(seq(yamlFragments[1],
+               yamlFragments[2]));
+  } else {
+    indexSets <-
+      mapply(seq,
+             yamlFragments[is.odd(yamlFragmentIndices)],
+             yamlFragments[is.even(yamlFragmentIndices)],
+             SIMPLIFY=FALSE);
+  }
 
   res <-
     lapply(indexSets,
            function(i, x=allLines) {
-             return(x[i]);
+             return(structure(x[i],
+                              class="yamlFragment"));
            });
 
   class(res) <-

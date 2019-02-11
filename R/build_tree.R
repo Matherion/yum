@@ -57,10 +57,12 @@ build_tree <- function(x,
       unlist(x,
              recursive=FALSE);
   } else if (!("yumFromFile" %in% class(x)) &&
-             !("yumRecursion" %in% class(x))) {
+             !("yumRecursion" %in% class(x)) &&
+             !("yumFromList" %in% class(x))) {
     stop("I can only process the objects resulting from ",
-         "a call to either 'load_yaml_fragments' or 'load_yaml_dir, ",
-         "which have class 'yumFromFile' or 'yumFromDir'. The ",
+         "a call to 'load_yaml_fragments', 'load_yaml_dir, ",
+         " or 'load_yaml_list', which have class ",
+         "'yumFromFile', 'yumFromDir', and 'yumFromList'. The ",
          "object you provided has ",
          ifelse(length(class(x)) == 1,
                        "class ",
@@ -156,8 +158,15 @@ build_tree <- function(x,
 
     nodeList <-
       lapply(lapply(x,
-                    structure,
-                    class = 'yumRecursion'),
+                    function(xToStructure) {
+                      if (is.null(xToStructure)) {
+                        return(structure(list(),
+                                         class = 'yumRecursion'));
+                      } else {
+                        return(structure(xToStructure,
+                                         class = 'yumRecursion'));
+                      }
+                    }),
              build_tree,
              idName = 'id',
              parentIdName = parentIdName,
