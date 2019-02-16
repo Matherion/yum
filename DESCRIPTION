@@ -6,12 +6,13 @@ Authors@R:
            family = "Peters",
            role = c("aut", "cre"),
            email = "gjalt-jorn@userfriendlyscience.com")
-Description: Several packages leverage the YAML format to
+Description: Several packages (the `rock`, `dct`, and
+  `justifier` packages) leverage the YAML format to
   facilitate systematic encoding of information in a format
   that is both machine- and human-readable. The yum package
   provides a number of functions to facilitate this in a
   uniform manner with minimal dependencies (i.e. only suggests
-  yaml).
+  the yaml and data.tree packages to enable additional functionality).
 License: GPL-3
 Encoding: UTF-8
 URL: https://yum.opens.science
@@ -20,5 +21,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Depends: R (>= 3.0.0)
-Suggests: data.tree (>= 0.7),
-          yaml (>= 2.2)
+Suggests: 
+    data.tree (>= 0.7),
+    yaml (>= 2.2),
+    covr

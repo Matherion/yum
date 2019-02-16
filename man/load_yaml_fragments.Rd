@@ -9,11 +9,33 @@ load_yaml_fragments(file, text, yamlFragments = NULL, select = ".*",
   encoding = "UTF-8", silent = TRUE)
 }
 \arguments{
-\item{file}{The path to a file to scan; if provided, takes precedence
-over \code{text}.}
+\item{file}{As \code{text} or \code{file}, you can specify a \code{file} to read with
+encoding \code{encoding}, which will then be read using \code{\link[base:readLines]{base::readLines()}}. If the
+argument is named \code{text}, whether it is the path to an existing file is checked
+first, and if it is, that file is read. If the argument is named \code{file}, and it
+does not point to an existing file, an error is produced (useful if calling
+from other functions). A \code{text} should be a character vector where every
+element is a line of the original source (like provided by \code{\link[base:readLines]{base::readLines()}});
+although if a character vector of one element \emph{and} including at least one
+newline character (\code{\\n}) is provided as \code{text}, it is split at the newline
+characters using \code{\link[base:strsplit]{base::strsplit()}}. Basically, this behavior means that the
+first argument can be either a character vector or the path to a file; and if
+you're specifying a file and you want to be certain that an error is thrown if
+it doesn't exist, make sure to name it \code{file}.}
 
-\item{text}{A character vector to scan, where every element should
-represent one line in the file; can be specified instead of \code{file}.}
+\item{text}{As \code{text} or \code{file}, you can specify a \code{file} to read with
+encoding \code{encoding}, which will then be read using \code{\link[base:readLines]{base::readLines()}}. If the
+argument is named \code{text}, whether it is the path to an existing file is checked
+first, and if it is, that file is read. If the argument is named \code{file}, and it
+does not point to an existing file, an error is produced (useful if calling
+from other functions). A \code{text} should be a character vector where every
+element is a line of the original source (like provided by \code{\link[base:readLines]{base::readLines()}});
+although if a character vector of one element \emph{and} including at least one
+newline character (\code{\\n}) is provided as \code{text}, it is split at the newline
+characters using \code{\link[base:strsplit]{base::strsplit()}}. Basically, this behavior means that the
+first argument can be either a character vector or the path to a file; and if
+you're specifying a file and you want to be certain that an error is thrown if
+it doesn't exist, make sure to name it \code{file}.}
 
 \item{yamlFragments}{A character vector of class \code{yamlFragment} where
 every element corresponds to one line of the YAML fragments, or a list
@@ -35,11 +57,17 @@ encountered.}
 \item{encoding}{The encoding to use when calling \code{\link[=readLines]{readLines()}}. Set to
 NULL to let \code{\link[=readLines]{readLines()}} guess.}
 
-\item{silent}{Whether to be silent (TRUE) or informative (FALSE).}
+\item{silent}{Whether to be silent (\code{TRUE}) or informative (\code{FALSE}).}
 }
 \value{
 A list of objects, where each object corresponds to one
-YAML fragment from the source file or text.
+YAML fragment from the source file or text. If the convention of
+the \code{rock}, \code{dct} and \code{justifier} packages is followed, each object
+in this list contains one or more named objects (lists), where the
+name indicated the type of information contained. Each of those
+objects (lists) then contains one or more objects of that type,
+such as metadata or codes for \code{rock}, a decentralized construct
+taxonomy element for \code{dct}, and a justification for \code{justifier}.
 }
 \description{
 These function extracts all YAML fragments from a file and then
@@ -47,17 +75,17 @@ calls \code{\link[yaml:yaml.load]{yaml::yaml.load()}} to parse them. It then ret
 of the parsed fragments.
 }
 \examples{
-yum::load_yaml_fragments(text=c(
-"---",
-"-",
-"  id: firstFragment",
-"---",
-"Outside of YAML",
-"---",
-"-",
-"  id: secondFragment",
-"  parentId: firstFragment",
-"---",
-"Also outside of YAML"));
+load_yaml_fragments(text="
+---
+-
+  id: firstFragment
+---
+Outside of YAML
+---
+-
+  id: secondFragment
+  parentId: firstFragment
+---
+Also outside of YAML");
 
 }

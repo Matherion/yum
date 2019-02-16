@@ -29,7 +29,7 @@ encountered.}
 \item{encoding}{The encoding to use when calling \code{\link[=readLines]{readLines()}}. Set to
 NULL to let \code{\link[=readLines]{readLines()}} guess.}
 
-\item{silent}{Whether to be silent (TRUE) or informative (FALSE).}
+\item{silent}{Whether to be silent (\code{TRUE}) or informative (\code{FALSE}).}
 }
 \value{
 A list of character vectors.

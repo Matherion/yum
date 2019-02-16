@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract all YAML fragments from all files in a directory — extract_yaml_dir • yum</title>
+<title>Flatten a list of lists to a list of atomic vectors — flatten_list_of_lists • yum</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,11 @@
 
 
 
-<meta property="og:title" content="Extract all YAML fragments from all files in a directory — extract_yaml_dir" />
+<meta property="og:title" content="Flatten a list of lists to a list of atomic vectors — flatten_list_of_lists" />
 
-<meta property="og:description" content="These function extracts all YAML fragments from all files in a
-directory returning a list of character vectors containing the
-extracted fragments." />
+<meta property="og:description" content="This function takes a hierarchical structure of lists and
+extracts all atomic vectors, returning one flat list of all
+those vectors." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -96,73 +96,54 @@ extracted fragments." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract all YAML fragments from all files in a directory</h1>
+    <h1>Flatten a list of lists to a list of atomic vectors</h1>
     
-    <div class="hidden name"><code>extract_yaml_dir.Rd</code></div>
+    <div class="hidden name"><code>flatten_list_of_lists.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>These function extracts all YAML fragments from all files in a
-directory returning a list of character vectors containing the
-extracted fragments.</p>
+    <p>This function takes a hierarchical structure of lists and
+extracts all atomic vectors, returning one flat list of all
+those vectors.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>extract_yaml_dir</span>(<span class='no'>path</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>fileRegexes</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"^[^\\.]+.*$"</span>), <span class='kw'>delimiterRegEx</span> <span class='kw'>=</span> <span class='st'>"^---$"</span>,
-  <span class='kw'>ignoreOddDelimiters</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='st'>"UTF-8"</span>, <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>flatten_list_of_lists</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>path</th>
-      <td><p>The path containing the files.</p></td>
-    </tr>
-    <tr>
-      <th>recursive</th>
-      <td><p>Whether to also process subdirectories (<code>TRUE</code>)
-or not (<code>FALSE</code>).</p></td>
-    </tr>
-    <tr>
-      <th>fileRegexes</th>
-      <td><p>A vector of regular expressions to match the files
-against: only files matching one or more regular expressions in this
-vector are processed. The default regex (<code>^[^\.]+.*$</code>) matches all
-files except those that start with a period (<code>.</code>).</p></td>
-    </tr>
-    <tr>
-      <th>delimiterRegEx</th>
-      <td><p>The regular expression used to locate YAML
-fragments.</p></td>
-    </tr>
-    <tr>
-      <th>ignoreOddDelimiters</th>
-      <td><p>Whether to throw an error (FALSE) or
-delete the last delimiter (TRUE) if an odd number of delimiters is
-encountered.</p></td>
-    </tr>
-    <tr>
-      <th>encoding</th>
-      <td><p>The encoding to use when calling <code><a href='https://www.rdocumentation.org/packages/base/topics/readLines'>readLines()</a></code>. Set to
-NULL to let <code><a href='https://www.rdocumentation.org/packages/base/topics/readLines'>readLines()</a></code> guess.</p></td>
-    </tr>
-    <tr>
-      <th>silent</th>
-      <td><p>Whether to be silent (<code>TRUE</code>) or informative (<code>FALSE</code>).</p></td>
+      <th>x</th>
+      <td><p>The list of lists.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of character vectors.</p>
+    <p>A list of atomic vectors.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='kw pkg'>yum</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/yum/topics/extract_yaml_dir'>extract_yaml_dir</a></span>(<span class='kw'>path</span><span class='kw'>=</span><span class='st'>"A:/some/path"</span>);
-<span class='co'># }</span></pre>
+    <pre class="examples"><div class='input'><span class='co'>### Create a list of lists</span>
+<span class='no'>listOfLists</span> <span class='kw'>&lt;-</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fl'>8</span>:<span class='fl'>5</span>), <span class='fl'>7</span>:<span class='fl'>7</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='fl'>8</span>:<span class='fl'>2</span>));
+<span class='fu'>flatten_list_of_lists</span>(<span class='no'>listOfLists</span>);</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 1 2 3
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] 8 7 6 5
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] 7
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] 1 2 3 4
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] 8 7 6 5 4 3 2
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

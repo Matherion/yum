@@ -15,20 +15,26 @@
 #' objects are retained.
 #'
 #' @return A list of objects, where each object corresponds to one
-#' YAML fragment from the source file or text.
+#' YAML fragment from the source file or text. If the convention of
+#' the `rock`, `dct` and `justifier` packages is followed, each object
+#' in this list contains one or more named objects (lists), where the
+#' name indicated the type of information contained. Each of those
+#' objects (lists) then contains one or more objects of that type,
+#' such as metadata or codes for `rock`, a decentralized construct
+#' taxonomy element for `dct`, and a justification for `justifier`.
 #' @examples
-#' yum::load_yaml_fragments(text=c(
-#' "---",
-#' "-",
-#' "  id: firstFragment",
-#' "---",
-#' "Outside of YAML",
-#' "---",
-#' "-",
-#' "  id: secondFragment",
-#' "  parentId: firstFragment",
-#' "---",
-#' "Also outside of YAML"));
+#' load_yaml_fragments(text="
+#' ---
+#' -
+#'   id: firstFragment
+#' ---
+#' Outside of YAML
+#' ---
+#' -
+#'   id: secondFragment
+#'   parentId: firstFragment
+#' ---
+#' Also outside of YAML");
 #'
 #' @export
 load_yaml_fragments <- function(file,
